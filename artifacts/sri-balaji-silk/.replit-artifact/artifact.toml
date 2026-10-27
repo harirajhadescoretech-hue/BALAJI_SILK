@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Sri Balaji Silk"
+description = "A customer-facing website for Sri Balaji Silk, a clothing store in Pappampadi, Tamil Nadu, featuring its clothing collections, store details, customer reviews, and contact information."
+version = "1.0.0"
+id = "artifacts/sri-balaji-silk"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 22235
+
+[services.development]
+run = "pnpm --filter @workspace/sri-balaji-silk run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/sri-balaji-silk", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/sri-balaji-silk/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "22235"
+BASE_PATH = "/"
